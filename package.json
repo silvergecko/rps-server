@@ -1,0 +1,24 @@
+{
+  "name": "rps-server",
+  "version": "0.0.1",
+  "description": "RPS Server - Startup package for RPS game taken seriously",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silvergecko/rps-server.git"
+  },
+  "keywords": [
+    "rps",
+    "game",
+    "node"
+  ],
+  "author": "Federico Terraneo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silvergecko/rps-server/issues"
+  },
+  "homepage": "https://github.com/silvergecko/rps-server#readme"
+}
