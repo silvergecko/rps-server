@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/silvergecko/rps-server/issues"
   },
-  "homepage": "https://github.com/silvergecko/rps-server#readme"
+  "homepage": "https://github.com/silvergecko/rps-server#readme",
+  "dependencies": {
+    "mongo": "^0.1.0"
+  }
 }
