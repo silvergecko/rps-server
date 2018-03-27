@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-    var users = require('./controllers/usersController.js');
+    var users = require('../controllers/usersController.js');
     
     app.route('/users')
       .get(users.list_all_users);

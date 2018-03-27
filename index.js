@@ -1,3 +1,5 @@
+// mongodb test connection script
+
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
