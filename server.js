@@ -6,6 +6,8 @@ var app = express();
 
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 var routes = require('./routes/usersRoutes.js'); //importing route
 routes(app);

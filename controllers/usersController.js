@@ -29,5 +29,47 @@ exports.list_all_users = function(req, res) {
 
 };
 
+exports.create_a_user = function(req, res) {
 
+    MongoClient.connect(url, function(err, client) {
 
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+    
+        var db = client.db(dbName);
+        var doc = JSON.parse(req.body.user);
+        db.collection('users').insertOne(doc, {forceServerObjectId:true}, function(error, result){
+            
+            if(error) res.send(error);
+            assert.equal(1, result.insertedCount);
+            res.json(doc);
+
+        });
+        
+        client.close();
+    });
+
+};
+
+exports.read_a_user = function(req, res) {
+
+    MongoClient.connect(url, function(err, client) {
+
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+    
+        var db = client.db(dbName);
+        //var query = JSON.parse(req.params.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '));
+        
+        db.collection('users').findOne(req.params, function(error, result) {
+            
+            if(error) res.send(error);
+            assert.equal(err, null);
+            res.json(result);
+
+        });
+        
+        client.close();
+    });
+
+};
