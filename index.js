@@ -5,7 +5,7 @@ const assert = require('assert');
 const url = 'mongodb://192.168.74.130:27017';
 
 // Database Name
-const dbName = 'playGround';
+const dbName = 'rps';
 
 // Use connect method to connect to the server
 MongoClient.connect(url, function(err, client) {
