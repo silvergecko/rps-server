@@ -1,0 +1,36 @@
+conn = new Mongo();
+
+db = conn.getDB("rps");
+
+db.users.insertMany([
+{ userName: "gecko", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "SPP", ladderPosition: 1},
+{ userName: "cabal", nation: "Italy", mostPlayedMove: "R", mostPlayedGamble: "RRR", ladderPosition: 2},
+{ userName: "cinzietta", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "PRP", ladderPosition: 3}
+]);
+
+db.games.insertMany([
+    {   
+        timestamp: new Date(),
+        contenders:[
+            {userId: db.users.findOne({userName:"gecko"})._id},
+            {userId: db.users.findOne({userName:"cabal"})._id}
+        ],
+        winner: db.users.findOne({userName:"gecko"})._id,
+        sets:[
+            {
+                gambles:[
+                    {userId: db.users.findOne({userName:"gecko"})._id, gamble:"SPP"},
+                    {userId: db.users.findOne({userName:"cabal"})._id, gamble:"RRR"}
+                ],
+                winner: db.users.findOne({userName:"gecko"})._id
+            },
+            {
+                gambles:[
+                    {userId: db.users.findOne({userName:"gecko"})._id, gamble:"RSP"},
+                    {userId: db.users.findOne({userName:"cabal"})._id, gamble:"SRR"}
+                ],
+                winner: db.users.findOne({userName:"gecko"})._id
+            }
+        ]
+    }
+]);
