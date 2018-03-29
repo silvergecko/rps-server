@@ -4,13 +4,13 @@ module.exports = function(app) {
     var users = require('../controllers/usersController.js');
     
     app.route('/users')
-      .get(users.list_all_users)
-      .post(users.create_a_user);
+      .get(users.listUsers)
+      .post(users.createUser);
   
     
-    app.route('/users/:userName')
-      .get(users.read_a_user);
-      //.put(users.update_a_user)
-      //.delete(users.delete_a_user);
+    app.route('/users/:userId')
+      .get(users.readUser)
+      .put(users.updateUser)
+      .delete(users.removeUser);
     
   };

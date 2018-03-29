@@ -1,6 +1,7 @@
 'use strict';
 
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 
 // Connection URL
@@ -10,7 +11,7 @@ const url = 'mongodb://192.168.74.130:27017';
 const dbName = 'rps';
 
 
-exports.list_all_users = function(req, res) {
+exports.listUsers = function(req, res) {
 
     MongoClient.connect(url, function(err, client) {
 
@@ -29,7 +30,7 @@ exports.list_all_users = function(req, res) {
 
 };
 
-exports.create_a_user = function(req, res) {
+exports.createUser = function(req, res) {
 
     MongoClient.connect(url, function(err, client) {
 
@@ -37,7 +38,8 @@ exports.create_a_user = function(req, res) {
         console.log("Connected successfully to server");
     
         var db = client.db(dbName);
-        var doc = JSON.parse(req.body.user);
+        var doc = JSON.parse(req.body.user.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '));
+        //var doc = JSON.parse(req.body.user);
         db.collection('users').insertOne(doc, {forceServerObjectId:true}, function(error, result){
             
             if(error) res.send(error);
@@ -51,7 +53,7 @@ exports.create_a_user = function(req, res) {
 
 };
 
-exports.read_a_user = function(req, res) {
+exports.readUser = function(req, res) {
 
     MongoClient.connect(url, function(err, client) {
 
@@ -59,9 +61,52 @@ exports.read_a_user = function(req, res) {
         console.log("Connected successfully to server");
     
         var db = client.db(dbName);
-        //var query = JSON.parse(req.params.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '));
         
-        db.collection('users').findOne(req.params, function(error, result) {
+        db.collection('users').findOne({_id:ObjectId(req.params.userId)}, function(error, result) {
+            
+            if(error) res.send(error);
+            assert.equal(err, null);
+            res.json(result);
+
+        });
+        
+        client.close();
+    });
+
+};
+
+exports.updateUser = function(req, res) {
+
+    MongoClient.connect(url, function(err, client) {
+
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+    
+        var db = client.db(dbName);
+        var doc = {"$set": JSON.parse(req.body.user.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '))};
+        db.collection('users').findOneAndUpdate({_id:ObjectId(req.params.userId)}, doc, function(error, result) {
+            
+            if(error) res.send(error);
+            assert.equal(err, null);
+            res.json(result);
+
+        });
+        
+        client.close();
+    });
+
+};
+
+exports.removeUser = function(req, res) {
+
+    MongoClient.connect(url, function(err, client) {
+
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+    
+        var db = client.db(dbName);
+
+        db.collection('users').deleteOne({_id:ObjectId(req.params.userId)}, function(error, result) {
             
             if(error) res.send(error);
             assert.equal(err, null);
