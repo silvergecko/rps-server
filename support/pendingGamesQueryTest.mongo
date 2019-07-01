@@ -1,0 +1,13 @@
+conn = new Mongo();
+
+db = conn.getDB("rps");
+
+db.games.find(
+    {
+        contenders: {userId: "gecko"},
+        closed: false,
+        sets: { closed: false, gambles:{ $ne: {userId: "gecko"} }
+        
+        }
+    }
+);

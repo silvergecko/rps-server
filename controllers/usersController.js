@@ -1,7 +1,7 @@
 'use strict';
 
 var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+//var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 
 // Connection URL
@@ -38,13 +38,19 @@ exports.createUser = function(req, res) {
         console.log("Connected successfully to server");
     
         var db = client.db(dbName);
-        var doc = JSON.parse(req.body.user.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '));
+        //var doc = JSON.parse(req.body.user.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '));
+        var user = {
+            _id: req.body.userId,
+            nation: req.body.nation
+        };
         //var doc = JSON.parse(req.body.user);
-        db.collection('users').insertOne(doc, {forceServerObjectId:true}, function(error, result){
+        db.collection('users').insertOne(user, {forceServerObjectId:false}, function(error, result){
             
             if(error) res.send(error);
-            assert.equal(1, result.insertedCount);
-            res.json(doc);
+            else {
+                assert.equal(1, result.insertedCount);
+                res.json(user);
+            }
 
         });
         
@@ -62,7 +68,7 @@ exports.readUser = function(req, res) {
     
         var db = client.db(dbName);
         
-        db.collection('users').findOne({_id:ObjectId(req.params.userId)}, function(error, result) {
+        db.collection('users').findOne({_id:req.params.userId}, function(error, result) {
             
             if(error) res.send(error);
             assert.equal(err, null);
@@ -84,7 +90,7 @@ exports.updateUser = function(req, res) {
     
         var db = client.db(dbName);
         var doc = {"$set": JSON.parse(req.body.user.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": '))};
-        db.collection('users').findOneAndUpdate({_id:ObjectId(req.params.userId)}, doc, function(error, result) {
+        db.collection('users').findOneAndUpdate({_id:req.params.userId}, doc, function(error, result) {
             
             if(error) res.send(error);
             assert.equal(err, null);
@@ -106,7 +112,7 @@ exports.removeUser = function(req, res) {
     
         var db = client.db(dbName);
 
-        db.collection('users').deleteOne({_id:ObjectId(req.params.userId)}, function(error, result) {
+        db.collection('users').deleteOne({_id:req.params.userId}, function(error, result) {
             
             if(error) res.send(error);
             assert.equal(err, null);

@@ -3,33 +3,36 @@ conn = new Mongo();
 db = conn.getDB("rps");
 
 db.users.insertMany([
-{ userName: "gecko", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "SPP", ladderPosition: 1},
-{ userName: "cabal", nation: "Italy", mostPlayedMove: "R", mostPlayedGamble: "RRR", ladderPosition: 2},
-{ userName: "cinzietta", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "PRP", ladderPosition: 3}
+{ _id: "gecko", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "SPP", ladderPosition: 1, wins: 1, losses: 0},
+{ _id: "cabal", nation: "Italy", mostPlayedMove: "R", mostPlayedGamble: "RRR", ladderPosition: 2, wins: 1, losses: 1},
+{ _id: "cinzietta", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "PRP", ladderPosition: 3, wins: 0, losses: 1}
 ]);
 
 db.games.insertMany([
     {   
         timestamp: new Date(),
         contenders:[
-            {userId: db.users.findOne({userName:"gecko"})._id},
-            {userId: db.users.findOne({userName:"cabal"})._id}
+            {userId: "gecko"},
+            {userId: "cabal"}
         ],
-        winner: db.users.findOne({userName:"gecko"})._id,
+        winner: "gecko",
+        closed: true,
         sets:[
             {
                 gambles:[
-                    {userId: db.users.findOne({userName:"gecko"})._id, gamble:"SPP"},
-                    {userId: db.users.findOne({userName:"cabal"})._id, gamble:"RRR"}
+                    {userId: "gecko", gamble:"SPP"},
+                    {userId: "cabal", gamble:"RRR"}
                 ],
-                winner: db.users.findOne({userName:"gecko"})._id
+                winner: "gecko",
+                closed: true
             },
             {
                 gambles:[
-                    {userId: db.users.findOne({userName:"gecko"})._id, gamble:"RSP"},
-                    {userId: db.users.findOne({userName:"cabal"})._id, gamble:"SRR"}
+                    {userId: "gecko", gamble:"RSP"},
+                    {userId: "cabal", gamble:"SRR"}
                 ],
-                winner: db.users.findOne({userName:"gecko"})._id
+                winner: "gecko",
+                closed: true
             }
         ]
     }
