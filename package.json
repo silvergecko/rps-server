@@ -1,6 +1,6 @@
 {
   "name": "rps-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "RPS Server - Startup package for RPS game taken seriously",
   "main": "server.js",
   "scripts": {
@@ -9,19 +9,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/silvergecko/rps-server.git"
+    "url": "git+https://github.com/fterraneo/rps-server.git"
   },
   "keywords": [
     "rps",
     "game",
-    "node"
+    "node",
+    "api"
   ],
   "author": "Federico Terraneo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/silvergecko/rps-server/issues"
+    "url": "https://github.com/fterraneo/rps-server/issues"
   },
-  "homepage": "https://github.com/silvergecko/rps-server#readme",
+  "homepage": "https://github.com/fterraneo/rps-server#readme",
   "dependencies": {
     "express": "^4.16.3",
     "mongo": "^0.1.0"

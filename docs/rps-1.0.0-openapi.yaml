@@ -1,0 +1,205 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 'RPS API'
+  description: 'rps API'
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/f.terraneo/rps/1.0.0
+tags:
+  - name: users
+    description: Users related entities
+  - name: games
+    description: Games related entities
+paths:
+  /User:
+    get:
+      tags:
+        - users
+      summary: Gets all users
+      responses:
+        '200':
+          description: An array of user objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - users
+      summary: Creates a new user
+      requestBody:
+        $ref: '#/components/requestBodies/User'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Order not created
+  /User({_id}):
+    get:
+      tags:
+        - users
+      summary: Gets a specific user object
+      parameters: 
+      - in: path
+        name: _id
+        description: Id of the user to retrive
+        required: true
+        schema:
+          $ref: '#/components/schemas/User/properties/_id'
+      responses:
+        '200':
+          description: A user object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    patch:
+      tags:
+        - users
+      summary: Updates an user
+      parameters: 
+      - in: path
+        name: _id
+        description: Id of the user to retrive
+        required: true
+        schema:
+          $ref: '#/components/schemas/User/properties/_id'
+      requestBody:
+        $ref: '#/components/requestBodies/User'
+      responses:
+        '201':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: User not updated
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - user
+      summary: Deletes an user
+      parameters: 
+      - in: path
+        name: _id
+        description: Id of the user to retrive
+        required: true
+        schema:
+          $ref: '#/components/schemas/User/properties/_id'
+      responses:
+        '200':
+          description: User deleted
+        '500':
+          description: User not deleted
+        '404':
+          description: User not found
+
+components:
+  schemas:
+    User:
+      required:
+        - _id
+        - nation
+      properties:
+        _id:
+          type: string
+          description: The user id
+          example: "gecko"
+        nation:
+          type: string
+          description: The user nation of appartenence
+          example: "Italy"
+        mostPlayedMove:
+          type: string
+          description: The most played move
+          default: null
+          nullable: true
+          enum: [
+            "R",
+            "P",
+            "S"
+          ]
+          example: "R"
+        mostPlayedGamble:
+          type: string
+          description: The user most played gamble
+          example: "RRS"
+        ladderPosition:
+          type: integer
+          description: User position in global ladder
+          example: 2
+        wins:
+          type: integer
+          description: User total number of won games
+          example: 2
+        losses:
+          type: integer
+          description: User total number of lost games
+          example: 1
+    Game:
+      properties:
+        timestamp:
+          type: string
+          description: Timestamp of game creation in standard format
+        contenders:
+          type: array
+          description: Users playing this game
+          items:
+            $ref: '#/components/schemas/User/properties/_id'
+          
+        winner:
+          description: Winning user
+          $ref: '#/components/schemas/User/properties/_id'
+        closed:
+          type: boolean
+          description: Flag indicating if the game is finished
+          example: false
+        sets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Set'
+    Set:
+      properties:
+        gambles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Gamble'
+        winner:
+          description: Winning user
+          $ref: '#/components/schemas/User/properties/_id'
+        closed:
+          type: boolean
+          description: Flag indicating if the set is finished
+          example: false
+    Gamble:
+      required:
+        - user
+        - gamble
+      properties:
+        user:
+          $ref: '#/components/schemas/User/properties/_id'
+        gamble:
+          type: string
+          description: A collection of three moves
+          example: "RSS"
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+      description: User to be created / updated
+      required: true
