@@ -1,0 +1,6 @@
+{
+    "name": "Server Developement",
+    "database": "mongodb://localhost:27017/development",
+    "port": 3000,
+    "root": "/api/v1/"
+}

@@ -1,11 +1,12 @@
 'use strict';
 
+const debug = require('debug')('server:debug');
 var MongoClient = require('mongodb').MongoClient;
 //var ObjectId = require('mongodb').ObjectID;
 var assert = require('assert');
 
 // Connection URL
-const url = 'mongodb://192.168.74.130:27017';
+const url = 'mongodb://localhost:27017';
 
 // Database Name
 const dbName = 'rps';

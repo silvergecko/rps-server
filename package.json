@@ -4,8 +4,9 @@
   "description": "RPS Server - Startup package for RPS game taken seriously",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "set DEBUG=server:debug&& set NODE_ENV=test&& mocha --reporter spec --exit   tests/ ",
+    "start": "nodemon src/index.js",
+    "dev": "set DEBUG=server:debug&& set NODE_ENV=development&& nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,10 @@
     "mongo": "^0.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.2"
+    "config": "^3.1.0",
+    "debug": "^4.1.1",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
   }
 }
