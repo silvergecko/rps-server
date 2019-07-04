@@ -1,6 +1,6 @@
 conn = new Mongo();
 
-db = conn.getDB("rps");
+db = conn.getDB("rps-dev");
 
 db.users.insertMany([
 { _id: "gecko", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "SPP", ladderPosition: 1, wins: 1, losses: 0},
@@ -36,4 +36,12 @@ db.games.insertMany([
             }
         ]
     }
+]);
+
+db = conn.getDB("rps-test");
+
+db.users.insertMany([
+{ _id: "gecko", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "SPP", ladderPosition: 1, wins: 1, losses: 0},
+{ _id: "cabal", nation: "Italy", mostPlayedMove: "R", mostPlayedGamble: "RRR", ladderPosition: 2, wins: 1, losses: 1},
+{ _id: "gnometta", nation: "Italy", mostPlayedMove: "P", mostPlayedGamble: "PRP", ladderPosition: 3, wins: 0, losses: 1}
 ]);

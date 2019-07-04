@@ -22,7 +22,7 @@ app.use(config.get('root'), gamesRoutes);
 const pendingGamesRoutes = require('./routes/pendingGamesRoutes.js');
 app.use(config.get('root'), pendingGamesRoutes);
 
-// lanuch the server
+// lanuch the server    
 const listen = app.listen(config.get('port'), function(){
     debug('Server started on port ' +  config.get('port') + ' and in ' + config.get('name') + ' mode');
 });

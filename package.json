@@ -4,9 +4,11 @@
   "description": "RPS Server - Startup package for RPS game taken seriously",
   "main": "server.js",
   "scripts": {
-    "test": "set DEBUG=server:debug&& set NODE_ENV=test&& mocha --reporter spec --exit   tests/ ",
-    "start": "nodemon src/index.js",
-    "dev": "set DEBUG=server:debug&& set NODE_ENV=development&& nodemon src/index.js"
+    "test": "set DEBUG=server:debug&& set NODE_ENV=test&& mocha --timeout 5000 --reporter spec --exit tests/ ",
+    "test-srv": "set DEBUG=server:debug&& set NODE_ENV=test&& nodemon src/index.js",
+    "dev-srv": "set DEBUG=server:debug&& set NODE_ENV=development&& nodemon src/index.js",
+    "debug-dev": "set DEBUG=server:debug&& set NODE_ENV=development&& node --inspect-brk=9229 src/index.js",
+    "debug-test": "set DEBUG=server:debug&& set NODE_ENV=test&& mocha --inspect-brk=9229 --timeout 10000 --reporter spec --exit tests/ "
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,8 @@
   },
   "homepage": "https://github.com/fterraneo/rps-server#readme",
   "dependencies": {
-    "express": "^4.16.3",
-    "mongo": "^0.1.0"
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7"
   },
   "devDependencies": {
     "config": "^3.1.0",

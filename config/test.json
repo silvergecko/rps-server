@@ -1,5 +1,6 @@
 {
     "name": "Server Test",
-    "database": "mongodb://localhost:27017/test",
-    "port": 3100
+    "database": "mongodb://localhost:27017/rps-test",
+    "port": 3100,
+    "root": "/api/v1/"
 }
